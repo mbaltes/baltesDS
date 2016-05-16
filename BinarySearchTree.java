@@ -1,5 +1,7 @@
 package baltesDS;
 
+import java.util.Random;
+
 public class BinarySearchTree {
   private Node root;
   
@@ -149,21 +151,61 @@ public class BinarySearchTree {
     }
   }
   
+  public int height(Node root) {
+    Node current = root;
+    int maxL = 0;
+    int maxR = 0;
+    // Check left side of tree.
+    while (current.getLeftChild() != null) {
+      current = current.getLeftChild();
+      maxL++;
+    }
+    // Check right side of tree.
+    current = root;
+    while (current.getRightChild() != null) {
+      current = current.getRightChild();
+      maxR++;
+    }
+    // Return largest
+    //System.out.println(maxL + " " + maxR);
+    return (maxL > maxR) ? maxL : maxR;
+  }
+  
+  public int heightRecursive(Node root) {
+    if (root == null) {
+      return -1;
+    } else {
+      return max(heightRecursive(root.getLeftChild()), 
+                 heightRecursive(root.getRightChild())) + 1;
+    }
+  }
+  
+  /**
+   * Helper function for heightRecursive. 
+   * @param a
+   * @param b
+   * @return The integer argument that is largest.
+   */
+  private int max(int a, int b) {
+    return (a > b) ? a : b;
+  }
+
   public static void main(String[] args) {
     BinarySearchTree b = new BinarySearchTree();
-    b.insert(32);
-    b.insert(27);
-    b.insert(57);
-    b.insert(5);
-    b.insert(40);
-    b.delete(32);
+    Random rand = new Random();
+    for (int i = 0; i < 100; i++) {
+      int n = rand.nextInt(100);
+      b.insert(n);
+    }
     
-    b.preOrderTraversal(b.root);
-    System.out.println();
-    b.inOrderTraversal(b.root);
-    System.out.println();
-    b.postOrderTraversal(b.root);
-    
+//    b.preOrderTraversal(b.root);
+//    System.out.println();
+//    b.inOrderTraversal(b.root);
+//    System.out.println();
+//    b.postOrderTraversal(b.root);
+//    System.out.println();
+    //System.out.println(b.height(b.root));
+    System.out.println("Height: " + b.heightRecursive(b.root));
     
   }
 }
