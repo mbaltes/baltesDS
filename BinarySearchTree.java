@@ -1,5 +1,7 @@
 package baltesDS;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class BinarySearchTree {
@@ -189,14 +191,43 @@ public class BinarySearchTree {
   private int max(int a, int b) {
     return (a > b) ? a : b;
   }
+  
+  public void breadthFirstSearch(Node root) {
+    Queue<Node> queue = new LinkedList<>();
+    if (root == null) {
+      return;
+    }
+    queue.add(root);
+    while (!queue.isEmpty()) {
+      Node current = queue.poll();
+      System.out.print(current.getData() + " ");
+      if (current.getLeftChild() != null) {
+        queue.add(current.getLeftChild());
+      }
+      if (current.getRightChild() != null) {
+        queue.add(current.getRightChild());
+      }
+    }
+  }
 
   public static void main(String[] args) {
     BinarySearchTree b = new BinarySearchTree();
-    Random rand = new Random();
-    for (int i = 0; i < 100; i++) {
-      int n = rand.nextInt(100);
-      b.insert(n);
-    }
+//    Random rand = new Random();
+//    for (int i = 0; i < 10; i++) {
+//      int n = rand.nextInt(100);
+//      b.insert(n);
+//    }
+//    b.breadthFirstSearch(b.root);
+//    System.out.println();
+//    b.inOrderTraversal(b.root);
+    
+      b.insert(39);
+      b.insert(2);
+      b.insert(52);
+      b.insert(19);
+      b.insert(43);
+      b.insert(6);
+      b.breadthFirstSearch(b.root);
     
 //    b.preOrderTraversal(b.root);
 //    System.out.println();
@@ -205,7 +236,7 @@ public class BinarySearchTree {
 //    b.postOrderTraversal(b.root);
 //    System.out.println();
     //System.out.println(b.height(b.root));
-    System.out.println("Height: " + b.heightRecursive(b.root));
+    //System.out.println("Height: " + b.heightRecursive(b.root));
     
   }
 }
